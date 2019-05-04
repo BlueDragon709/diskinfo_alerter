@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
 import 'disks.dart';
+import 'API/api.dart';
 import 'models/disk_info.dart';
 
 void main() => runApp(MyApp());
@@ -32,13 +36,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    DiskInfo disk = new DiskInfo();
-    disk.name = "Test";
-    disk.driveType = "TestType";
-    disk.driveFormat = "TestFormat";
-    disk.totalSize = 2;
-    disk.totalFreeSpace = 1;
-    _disks.add(disk);
+    _getDisks();
+  }
+
+  _getDisks() {
+    API.getDisks().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        _disks = list.map((model) => DiskInfo.fromJson(model)).toList();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -50,7 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Disks(_disks)],
+          children: <Widget>[
+            Disks(
+              disks: _disks,
+            )
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

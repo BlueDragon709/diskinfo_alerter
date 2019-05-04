@@ -5,7 +5,7 @@ import './models/disk_info.dart';
 class Disks extends StatelessWidget {
   final List<DiskInfo> disks;
 
-  Disks([this.disks = const []]);
+  Disks({this.disks});
 
   @override
   Widget build(BuildContext context) {
