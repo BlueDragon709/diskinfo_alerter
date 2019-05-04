@@ -9,18 +9,21 @@ class Disks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: disks
-          .map((element) => Card(
-                child: Column(
-                  children: <Widget>[
-                    Text(element.name),
-                    Text(element.totalSize.toString()),
-                    Text(element.totalFreeSpace.toString()),
-                  ],
-                ),
-              ))
-          .toList(),
+    return ListView.builder(
+      itemCount: disks.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Column(
+            children: <Widget>[
+              Text(disks[index].name),
+              Text(disks[index].driveType),
+              Text(disks[index].driveFormat),
+              Text(disks[index].totalSize.toString()),
+              Text(disks[index].totalFreeSpace.toString()),
+            ],
+          ),
+        );
+      },
     );
   }
 }
