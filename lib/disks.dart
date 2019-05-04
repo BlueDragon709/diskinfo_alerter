@@ -15,11 +15,22 @@ class Disks extends StatelessWidget {
         return Card(
           child: Column(
             children: <Widget>[
-              Text(disks[index].name),
-              Text(disks[index].driveType),
-              Text(disks[index].driveFormat),
-              Text(disks[index].totalSize.toString()),
-              Text(disks[index].totalFreeSpace.toString()),
+              Row(
+                children: <Widget>[
+                  Text(disks[index].name),
+                  Spacer(),
+                  Text(disks[index].driveType),
+                  Spacer(),
+                  Text(disks[index].driveFormat),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text(disks[index].totalSize.toString()),
+                  Spacer(),
+                  Text(disks[index].totalFreeSpace.toString()),
+                ],
+              ),
             ],
           ),
         );
