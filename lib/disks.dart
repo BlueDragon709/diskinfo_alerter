@@ -1,16 +1,34 @@
+import 'package:diskinfo_alerter/models/basic_disk.dart';
 import 'package:flutter/material.dart';
 
-import './models/basic_disk.dart';
+import './API/api.dart';
 import './pages/specific_disk_page.dart';
 
 class Disks extends StatelessWidget {
-  final List<BasicDiskInfo> disks;
-
-  Disks({this.disks});
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return FutureBuilder(
+      future: API.fetchAllDisks(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return new CircularProgressIndicator();
+          default:
+            if (snapshot.hasError) {
+              return new Text('Error: ${snapshot.error}');
+            } else {
+              print(snapshot.data);
+              return createListView(context, snapshot);
+            }
+        }
+      },
+    );
+  }
+
+  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<BasicDiskInfo> disks = snapshot.data;
+    return new ListView.builder(
       itemCount: disks.length,
       itemBuilder: (context, index) {
         return GestureDetector(

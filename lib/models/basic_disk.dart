@@ -16,11 +16,21 @@ class BasicDiskInfo {
       this.totalSize,
       this.totalFreeSpace});
 
-  BasicDiskInfo.fromJson(Map json)
-      : id = json['id'],
-        name = json['name'],
-        driveType = json['driveType'],
-        driveFormat = json['driveFormat'],
-        totalSize = json['totalSize'],
-        totalFreeSpace = json['totalFreeSpace'];
+  factory BasicDiskInfo.fromJson(Map<String, dynamic> json) {
+    return BasicDiskInfo(
+        id: json['id'],
+        name: json['name'],
+        driveType: json['driveType'],
+        driveFormat: json['driveFormat'],
+        totalSize: json['totalSize'],
+        totalFreeSpace: json['totalFreeSpace']);
+  }
+
+  // BasicDiskInfo.fromJson(Map json)
+  //     : id = json['id'],
+  //       name = json['name'],
+  //       driveType = json['driveType'],
+  //       driveFormat = json['driveFormat'],
+  //       totalSize = json['totalSize'],
+  //       totalFreeSpace = json['totalFreeSpace'];
 }
