@@ -11,13 +11,12 @@ class API {
   }
 
   static Future<List<BasicDiskInfo>> fetchAllDisks() async {
-    final response = await http.get('http://192.168.2.55:5000/api/disk');
+    final response = await getData('disk');
 
     if (response.statusCode == 200) {
       Iterable list = json.decode(response.body);
       var disks = new List<BasicDiskInfo>();
       disks = list.map((model) => BasicDiskInfo.fromJson(model)).toList();
-      print(disks[0]);
       return disks;
     } else {
       throw Exception('Failed to load disks');

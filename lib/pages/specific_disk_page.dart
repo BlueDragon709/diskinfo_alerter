@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../API/api.dart';
-import '../models/disk.dart';
 
 class SpecificDiskPage extends StatefulWidget {
   SpecificDiskPage({Key key, this.diskId}) : super(key: key);

@@ -18,7 +18,6 @@ class Disks extends StatelessWidget {
             if (snapshot.hasError) {
               return new Text('Error: ${snapshot.error}');
             } else {
-              print(snapshot.data);
               return createListView(context, snapshot);
             }
         }
@@ -28,9 +27,25 @@ class Disks extends StatelessWidget {
 
   Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
     List<BasicDiskInfo> disks = snapshot.data;
+    String imageUrl;
     return new ListView.builder(
       itemCount: disks.length,
       itemBuilder: (context, index) {
+        switch (disks[index].driveType) {
+          case 'Fixed':
+            if (disks[index].name == 'C:\\') {
+              imageUrl = 'assets/icons/os_disk.png';
+            } else {
+              imageUrl = 'assets/icons/disk.png';
+            }
+            break;
+          case 'Network':
+            imageUrl = 'assets/icons/network_disk.png';
+            break;
+          default:
+            imageUrl = 'assets/icons/disk.png';
+            break;
+        }
         return GestureDetector(
           onTap: () {
             Navigator.push(
@@ -42,24 +57,22 @@ class Disks extends StatelessWidget {
                 ));
           },
           child: Card(
-            child: Column(
+            child: Row(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(disks[index].name),
-                    Spacer(),
-                    Text(disks[index].driveType),
-                    Spacer(),
-                    Text(disks[index].driveFormat),
-                  ],
+                Container(
+                  height: 100.0,
+                  child: Image.asset(imageUrl),
                 ),
-                Row(
-                  children: <Widget>[
-                    Text(disks[index].totalSize.toString()),
-                    Spacer(),
-                    Text(disks[index].totalFreeSpace.toString()),
-                  ],
-                ),
+                Spacer(),
+                Text(disks[index].name),
+                Spacer(),
+                Text(disks[index].driveType),
+                Spacer(),
+                Text(disks[index].driveFormat),
+                Spacer(),
+                Text(disks[index].totalSize.toString()),
+                Spacer(),
+                Text(disks[index].totalFreeSpace.toString()),
               ],
             ),
           ),
