@@ -1,6 +1,7 @@
 import 'dart:core';
 
 class DiskInfo {
+  int id;
   String name;
   String driveType;
   String driveFormat;
@@ -8,14 +9,16 @@ class DiskInfo {
   int totalFreeSpace;
 
   DiskInfo(
-      {this.name,
+      {this.id,
+      this.name,
       this.driveType,
       this.driveFormat,
       this.totalSize,
       this.totalFreeSpace});
 
   DiskInfo.fromJson(Map json)
-      : name = json['name'],
+      : id = json['id'],
+        name = json['name'],
         driveType = json['driveType'],
         driveFormat = json['driveFormat'],
         totalSize = json['totalSize'],
