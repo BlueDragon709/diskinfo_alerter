@@ -15,8 +15,8 @@ class API {
 
     if (response.statusCode == 200) {
       Iterable list = json.decode(response.body);
-      var disks = new List<BasicDiskInfo>();
-      disks = list.map((model) => BasicDiskInfo.fromJson(model)).toList();
+      List<BasicDiskInfo> disks =
+          list.map((model) => BasicDiskInfo.fromJson(model)).toList();
       return disks;
     } else {
       throw Exception('Failed to load disks');

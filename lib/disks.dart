@@ -57,6 +57,7 @@ class Disks extends StatelessWidget {
                 ));
           },
           child: Card(
+            margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
             child: Row(
               children: <Widget>[
                 Container(
@@ -73,6 +74,7 @@ class Disks extends StatelessWidget {
                 Text(disks[index].totalSize.toString()),
                 Spacer(),
                 Text(disks[index].totalFreeSpace.toString()),
+                Spacer()
               ],
             ),
           ),
