@@ -2,25 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../API/api.dart';
 
-class SpecificDiskPage extends StatefulWidget {
+class SpecificDiskPage extends StatelessWidget {
   SpecificDiskPage({Key key, this.diskId}) : super(key: key);
 
   final int diskId;
-
-  @override
-  _SpecificDiskPageState createState() => _SpecificDiskPageState();
-}
-
-class _SpecificDiskPageState extends State<SpecificDiskPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +15,7 @@ class _SpecificDiskPageState extends State<SpecificDiskPage> {
       ),
       body: Center(
         child: FutureBuilder(
-          future: API.fetchDisk(widget.diskId),
+          future: API.fetchDisk(diskId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Column(

@@ -1,14 +1,17 @@
 import 'package:diskinfo_alerter/models/basic_disk.dart';
 import 'package:flutter/material.dart';
 
-import './API/api.dart';
 import './pages/specific_disk_page.dart';
 
 class Disks extends StatelessWidget {
+  Disks({this.diskFuture});
+
+  final Future diskFuture;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: API.fetchAllDisks(),
+      future: diskFuture,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
