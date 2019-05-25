@@ -1,4 +1,4 @@
-package com.example.diskinfo_alerter;
+package com.BlueDragon709.diskinfo_alerter;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

@@ -1,5 +1,6 @@
 import 'package:diskinfo_alerter/models/basic_disk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import './pages/specific_disk_page.dart';
 
@@ -25,6 +26,64 @@ class Disks extends StatelessWidget {
             }
         }
       },
+    );
+  }
+
+  Widget imageSection(String imageUrl) {
+    return Container(
+      height: 100.0,
+      child: Image.asset(imageUrl),
+    );
+  }
+
+  Widget infoSection(BasicDiskInfo info) {
+    double percentage(int totalSize, int totalFreeSpace) {
+      return (100.0 -
+          ((info.totalFreeSpace / info.totalSize) * 100).toDouble());
+    }
+
+    double _percentage = percentage(info.totalSize, info.totalFreeSpace);
+
+    Color colorPercentage(_percentage) {
+      if (_percentage >= 75 && _percentage <= 89) {
+        return Colors.orange;
+      } else if (_percentage >= 90) {
+        return Colors.orange;
+      }
+
+      return Colors.green;
+    }
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 10.0),
+            child: Text(info.name),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10.0),
+            child: Text(info.driveType),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10.0),
+            child: Text(info.driveFormat),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10.0),
+            child: Text('Capacity is ${_percentage.toStringAsFixed(2)}% full'),
+          ),
+          Container(
+            margin: EdgeInsets.all(10.0),
+            child: LinearProgressIndicator(
+              value: percentage(info.totalSize, info.totalFreeSpace) * 0.01,
+              valueColor: AlwaysStoppedAnimation<Color>(colorPercentage(
+                  percentage(info.totalSize, info.totalFreeSpace))),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -63,21 +122,10 @@ class Disks extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
             child: Row(
               children: <Widget>[
-                Container(
-                  height: 100.0,
-                  child: Image.asset(imageUrl),
+                imageSection(imageUrl),
+                Expanded(
+                  child: infoSection(disks[index]),
                 ),
-                Spacer(),
-                Text(disks[index].name),
-                Spacer(),
-                Text(disks[index].driveType),
-                Spacer(),
-                Text(disks[index].driveFormat),
-                Spacer(),
-                Text(disks[index].totalSize.toString()),
-                Spacer(),
-                Text(disks[index].totalFreeSpace.toString()),
-                Spacer()
               ],
             ),
           ),
