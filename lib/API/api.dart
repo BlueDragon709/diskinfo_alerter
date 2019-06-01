@@ -8,7 +8,7 @@ import 'package:diskinfo_alerter/models/disk.dart';
 /// A class for all calls to the DiskInfoAPI
 class API {
   static Future getData(String url) {
-    return http.get('http://192.168.2.55:5000/api/' + url);
+    return http.get('http://192.168.2.8:5000/api/' + url);
     //return http.get('http://172.27.1.148:5000/api/' + url);
   }
 

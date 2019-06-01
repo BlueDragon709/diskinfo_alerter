@@ -1,3 +1,5 @@
+import 'package:diskinfo_alerter/models/choice.dart';
+import 'package:diskinfo_alerter/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -15,6 +17,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  Choice _selectedChoice = choices[0];
+
+  void _select(Choice choice) {
+    setState(() {
+      _selectedChoice = choice;
+    });
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SettingsPage(
+                title: _selectedChoice.title,
+              ),
+        ));
+  }
 
   Future _future;
 
@@ -53,6 +71,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(choices[0].icon),
+            onPressed: () {
+              _select(choices[0]);
+            },
+          )
+        ],
       ),
       body: Center(
         child: Disks(
@@ -71,3 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Settings', icon: Icons.settings)
+];
