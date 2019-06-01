@@ -40,7 +40,7 @@ class API {
 
   static getApiLink() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String link = (prefs.getString('link') ?? '');
+    String link = (prefs.getString('link') ?? '1');
     return link;
   }
 }
