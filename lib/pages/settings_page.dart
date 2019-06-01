@@ -1,5 +1,5 @@
-import 'package:diskinfo_alerter/settings_from.dart';
 import 'package:flutter/material.dart';
+import '../settings_form.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({this.title});
