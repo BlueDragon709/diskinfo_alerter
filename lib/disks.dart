@@ -1,8 +1,9 @@
-import 'package:diskinfo_alerter/models/basic_disk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import './models/basic_disk.dart';
 import './pages/specific_disk_page.dart';
+import './pages/settings_page.dart';
 
 class Disks extends StatelessWidget {
   Disks({this.diskFuture});
@@ -20,7 +21,28 @@ class Disks extends StatelessWidget {
             return new CircularProgressIndicator();
           default:
             if (snapshot.hasError) {
-              return new Text('Error: ${snapshot.error}');
+              return new Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text("Couldn't find any disks!"),
+                    Text(
+                        'Check if you have set your API link on the settings page.'),
+                    RaisedButton(
+                      child: Text('Settings'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SettingsPage(
+                                    title: 'Settings',
+                                  ),
+                            ));
+                      },
+                    )
+                  ],
+                ),
+              );
             } else {
               return createListView(context, snapshot);
             }

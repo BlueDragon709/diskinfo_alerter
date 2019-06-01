@@ -1,10 +1,10 @@
-import 'package:diskinfo_alerter/models/choice.dart';
-import 'package:diskinfo_alerter/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../disks.dart';
+import '../models/choice.dart';
 import '../API/api.dart';
+import './settings_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
