@@ -8,13 +8,14 @@ import './pages/settings_page.dart';
 class Disks extends StatelessWidget {
   Disks({this.diskFuture});
 
-  final Future diskFuture;
+  final Future<List<BasicDiskInfo>> diskFuture;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: diskFuture,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<List<BasicDiskInfo>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
@@ -109,7 +110,8 @@ class Disks extends StatelessWidget {
     );
   }
 
-  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+  Widget createListView(
+      BuildContext context, AsyncSnapshot<List<BasicDiskInfo>> snapshot) {
     List<BasicDiskInfo> disks = snapshot.data;
     String imageUrl;
     return new ListView.builder(

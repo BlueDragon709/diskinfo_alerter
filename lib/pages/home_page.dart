@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _future = API.fetchAllDisks();
+    _future = API.fetchAllDisks().timeout(Duration(seconds: 5));
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            _future = API.fetchAllDisks();
+            _future = API.fetchAllDisks().timeout(Duration(seconds: 5));
           });
         },
         tooltip: 'Refresh',

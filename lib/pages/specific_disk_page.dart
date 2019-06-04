@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/disk.dart';
 import '../API/api.dart';
 
 class SpecificDiskPage extends StatelessWidget {
@@ -16,19 +17,20 @@ class SpecificDiskPage extends StatelessWidget {
       body: Center(
         child: FutureBuilder(
           future: API.fetchDisk(diskId),
-          builder: (context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<Disk> snapshot) {
             if (snapshot.hasData) {
+              Disk _disk = snapshot.data;
               return Column(
                 children: <Widget>[
-                  Text(snapshot.data.id.toString()),
-                  Text(snapshot.data.name),
-                  Text(snapshot.data.volumeLable),
-                  Text(snapshot.data.isReady.toString()),
-                  Text(snapshot.data.driveType),
-                  Text(snapshot.data.driveFormat),
-                  Text(snapshot.data.totalSize.toString()),
-                  Text(snapshot.data.totalFreeSpace.toString()),
-                  Text(snapshot.data.availableFreeSpace.toString()),
+                  Text(_disk.id.toString()),
+                  Text(_disk.name),
+                  Text(_disk.volumeLable),
+                  Text(_disk.isReady.toString()),
+                  Text(_disk.driveType),
+                  Text(_disk.driveFormat),
+                  Text(_disk.totalSize.toString()),
+                  Text(_disk.totalFreeSpace.toString()),
+                  Text(_disk.availableFreeSpace.toString()),
                 ],
               );
             } else if (snapshot.hasError) {
