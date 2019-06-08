@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import './styles.dart';
+
 import './models/basic_disk.dart';
 import './pages/specific_disk_page.dart';
 import './pages/settings_page.dart';
@@ -82,19 +84,19 @@ class Disks extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(left: 10.0),
+            margin: Styles.listItemTextMargin,
             child: Text(info.name),
           ),
           Container(
-            margin: EdgeInsets.only(left: 10.0),
+            margin: Styles.listItemTextMargin,
             child: Text(info.driveType),
           ),
           Container(
-            margin: EdgeInsets.only(left: 10.0),
+            margin: Styles.listItemTextMargin,
             child: Text(info.driveFormat),
           ),
           Container(
-            margin: EdgeInsets.only(left: 10.0),
+            margin: Styles.listItemTextMargin,
             child: Text('Capacity is ${_percentage.toStringAsFixed(2)}% full'),
           ),
           Container(
@@ -144,7 +146,7 @@ class Disks extends StatelessWidget {
                 ));
           },
           child: Card(
-            margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
+            margin: Styles.listItemMargin,
             child: Row(
               children: <Widget>[
                 imageSection(imageUrls[index]),

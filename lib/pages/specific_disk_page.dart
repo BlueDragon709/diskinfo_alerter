@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/disk.dart';
 import '../API/api.dart';
+import '../styles.dart';
 
 class SpecificDiskPage extends StatelessWidget {
   SpecificDiskPage({Key key, this.diskId, this.imageString}) : super(key: key);
@@ -69,7 +70,7 @@ Widget infoSection(Disk info) {
   _info.forEach((k, v) => rows.add(infoRow(k, v)));
 
   return Container(
-    margin: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 0.0),
+    margin: Styles.listItemMargin,
     child: Column(
       children: rows,
     ),
