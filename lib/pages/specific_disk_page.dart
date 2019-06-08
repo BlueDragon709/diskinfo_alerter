@@ -20,19 +20,10 @@ class SpecificDiskPage extends StatelessWidget {
           future: API.fetchDisk(diskId),
           builder: (BuildContext context, AsyncSnapshot<Disk> snapshot) {
             if (snapshot.hasData) {
-              Disk _disk = snapshot.data;
               return Column(
                 children: <Widget>[
                   imageSection(imageString),
-                  Text(_disk.id.toString()),
-                  Text(_disk.name),
-                  Text(_disk.volumeLable),
-                  Text(_disk.isReady.toString()),
-                  Text(_disk.driveType),
-                  Text(_disk.driveFormat),
-                  Text(_disk.totalSize.toString()),
-                  Text(_disk.totalFreeSpace.toString()),
-                  Text(_disk.availableFreeSpace.toString()),
+                  infoSection(snapshot.data)
                 ],
               );
             } else if (snapshot.hasError) {
@@ -47,14 +38,59 @@ class SpecificDiskPage extends StatelessWidget {
   }
 }
 
-Widget imageSection(String image) => Container(
-      child: RotatedBox(
-        child: Image.asset(
-          image,
-          width: 240,
-          height: 600,
-          fit: BoxFit.cover,
-        ),
-        quarterTurns: 1,
+Widget imageSection(String image) {
+  return Container(
+    child: RotatedBox(
+      child: Image.asset(
+        image,
+        width: 240,
+        height: 600,
+        fit: BoxFit.cover,
       ),
-    );
+      quarterTurns: 1,
+    ),
+  );
+}
+
+Widget infoSection(Disk info) {
+  Map<String, dynamic> _info = {
+    'Name': info.name,
+    'Lable': info.volumeLable,
+    'Is ready': info.isReady,
+    'Disk type': info.driveType,
+    'Disk format': info.driveFormat,
+    'Total size': info.totalSize,
+    'Total free space': info.totalFreeSpace,
+    'Available free space': info.availableFreeSpace
+  };
+
+  List<Widget> rows = [];
+
+  _info.forEach((k, v) => rows.add(infoRow(k, v)));
+
+  return Container(
+    margin: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 0.0),
+    child: Column(
+      children: rows,
+    ),
+  );
+}
+
+Widget infoRow(String rowName, dynamic rowData) {
+  Widget dataWidget;
+  if (rowData is int) {
+    dataWidget = Text('${rowData.toString()} bytes');
+  } else if (rowData is bool) {
+    dataWidget = Text(rowData.toString());
+  } else {
+    dataWidget = Text(rowData);
+  }
+
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Text(rowName),
+      dataWidget,
+    ],
+  );
+}
