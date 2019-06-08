@@ -4,9 +4,10 @@ import '../models/disk.dart';
 import '../API/api.dart';
 
 class SpecificDiskPage extends StatelessWidget {
-  SpecificDiskPage({Key key, this.diskId}) : super(key: key);
+  SpecificDiskPage({Key key, this.diskId, this.imageString}) : super(key: key);
 
   final int diskId;
+  final String imageString;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class SpecificDiskPage extends StatelessWidget {
               Disk _disk = snapshot.data;
               return Column(
                 children: <Widget>[
+                  imageSection(imageString),
                   Text(_disk.id.toString()),
                   Text(_disk.name),
                   Text(_disk.volumeLable),
@@ -44,3 +46,15 @@ class SpecificDiskPage extends StatelessWidget {
     );
   }
 }
+
+Widget imageSection(String image) => Container(
+      child: RotatedBox(
+        child: Image.asset(
+          image,
+          width: 240,
+          height: 600,
+          fit: BoxFit.cover,
+        ),
+        quarterTurns: 1,
+      ),
+    );

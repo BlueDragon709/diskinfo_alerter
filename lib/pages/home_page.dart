@@ -1,3 +1,4 @@
+import 'package:diskinfo_alerter/models/basic_disk.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -34,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  Future _future;
+  Future<List<BasicDiskInfo>> _future;
 
   @override
   void initState() {

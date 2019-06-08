@@ -113,23 +113,23 @@ class Disks extends StatelessWidget {
   Widget createListView(
       BuildContext context, AsyncSnapshot<List<BasicDiskInfo>> snapshot) {
     List<BasicDiskInfo> disks = snapshot.data;
-    String imageUrl;
+    List<String> imageUrls = [];
     return new ListView.builder(
       itemCount: disks.length,
       itemBuilder: (context, index) {
         switch (disks[index].driveType) {
           case 'Fixed':
             if (disks[index].name == 'C:\\') {
-              imageUrl = 'assets/icons/os_disk.png';
+              imageUrls.insert(index, 'assets/icons/os_disk.png');
             } else {
-              imageUrl = 'assets/icons/disk.png';
+              imageUrls.insert(index, 'assets/icons/disk.png');
             }
             break;
           case 'Network':
-            imageUrl = 'assets/icons/network_disk.png';
+            imageUrls.insert(index, 'assets/icons/network_disk.png');
             break;
           default:
-            imageUrl = 'assets/icons/disk.png';
+            imageUrls.insert(index, 'assets/icons/disk.png');
             break;
         }
         return GestureDetector(
@@ -139,6 +139,7 @@ class Disks extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => SpecificDiskPage(
                         diskId: disks[index].id,
+                        imageString: imageUrls[index],
                       ),
                 ));
           },
@@ -146,7 +147,7 @@ class Disks extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
             child: Row(
               children: <Widget>[
-                imageSection(imageUrl),
+                imageSection(imageUrls[index]),
                 Expanded(
                   child: infoSection(disks[index]),
                 ),
