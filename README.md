@@ -9,7 +9,7 @@ A Flutter app that integrates with my [DiskInfoAPI](https://github.com/BlueDrago
 - [x] Settings page
 - [x] Addind FireBase
 - [x] Push notifications  
-- [ ] Create a nice UI for the specific disk page
+- [x] Create a nice UI for the specific disk page
 
 ## If you want to build this app
 
