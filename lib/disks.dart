@@ -70,7 +70,7 @@ class Disks extends StatelessWidget {
     double _percentage = percentage(info.totalSize, info.totalFreeSpace);
 
     Color colorPercentage(_percentage) {
-      if (_percentage >= 75 && _percentage <= 89) {
+      if (_percentage >= 75 && _percentage < 90) {
         return Colors.orange;
       } else if (_percentage >= 90) {
         return Colors.red;
