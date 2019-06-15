@@ -62,6 +62,27 @@ class Disks extends StatelessWidget {
   }
 
   Widget infoSection(BasicDiskInfo info) {
+    List<Widget> widgets = [];
+
+    widgets.add(Container(
+      margin: Styles.listItemTextMargin,
+      child: Text(info.name),
+    ));
+
+    widgets.add(Container(
+      margin: Styles.listItemTextMargin,
+      child: Text(info.driveType),
+    ));
+    percentageSection(info).forEach((e) => widgets.add(e));
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widgets,
+      ),
+    );
+  }
+
+  List<Widget> percentageSection(BasicDiskInfo info) {
     double percentage(int totalSize, int totalFreeSpace) {
       return (100.0 -
           ((info.totalFreeSpace / info.totalSize) * 100).toDouble());
@@ -79,43 +100,36 @@ class Disks extends StatelessWidget {
       return Colors.green;
     }
 
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: Styles.listItemTextMargin,
-            child: Text(info.name),
-          ),
-          Container(
-            margin: Styles.listItemTextMargin,
-            child: Text(info.driveType),
-          ),
-          Container(
-            margin: Styles.listItemTextMargin,
-            child: Text(info.driveFormat),
-          ),
-          Container(
-            margin: Styles.listItemTextMargin,
-            child: Text('Capacity is ${_percentage.toStringAsFixed(2)}% full'),
-          ),
-          Container(
-            margin: EdgeInsets.all(10.0),
-            child: LinearProgressIndicator(
-              value: percentage(info.totalSize, info.totalFreeSpace) * 0.01,
-              valueColor: AlwaysStoppedAnimation<Color>(colorPercentage(
-                  percentage(info.totalSize, info.totalFreeSpace))),
-            ),
-          ),
-        ],
-      ),
-    );
+    List<Widget> section = [];
+
+    if (info.driveFormat != null) {
+      section.add(Container(
+        margin: Styles.listItemTextMargin,
+        child: Text(info.driveFormat),
+      ));
+      section.add(Container(
+        margin: Styles.listItemTextMargin,
+        child: Text('Capacity is ${_percentage.toStringAsFixed(2)}% full'),
+      ));
+      section.add(Container(
+        margin: EdgeInsets.all(10.0),
+        child: LinearProgressIndicator(
+          value: percentage(info.totalSize, info.totalFreeSpace) * 0.01,
+          valueColor: AlwaysStoppedAnimation<Color>(
+              colorPercentage(percentage(info.totalSize, info.totalFreeSpace))),
+        ),
+      ));
+    } else {
+      section.add(Container());
+    }
+    return section;
   }
 
   Widget createListView(
       BuildContext context, AsyncSnapshot<List<BasicDiskInfo>> snapshot) {
     List<BasicDiskInfo> disks = snapshot.data;
     List<String> imageUrls = [];
+    bool clickable = true;
     return new ListView.builder(
       itemCount: disks.length,
       itemBuilder: (context, index) {
@@ -136,14 +150,16 @@ class Disks extends StatelessWidget {
         }
         return GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SpecificDiskPage(
-                        diskId: disks[index].id,
-                        imageString: imageUrls[index],
-                      ),
-                ));
+            if (disks[index].driveFormat != null) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SpecificDiskPage(
+                          diskId: disks[index].id,
+                          imageString: imageUrls[index],
+                        ),
+                  ));
+            }
           },
           child: Card(
             margin: Styles.listItemMargin,
