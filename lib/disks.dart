@@ -129,7 +129,6 @@ class Disks extends StatelessWidget {
       BuildContext context, AsyncSnapshot<List<BasicDiskInfo>> snapshot) {
     List<BasicDiskInfo> disks = snapshot.data;
     List<String> imageUrls = [];
-    bool clickable = true;
     return new ListView.builder(
       itemCount: disks.length,
       itemBuilder: (context, index) {
